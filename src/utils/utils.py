@@ -43,7 +43,7 @@ def pixel_collision(
     hitmask2: HitMaskType,
 ):
     """Checks if two objects collide and not just their rects.
-    
+
     Args:
         rect1: The first object's rect.
         rect2: The second object's rect.

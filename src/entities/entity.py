@@ -1,12 +1,13 @@
 """Module defining the Entity class."""
+
 from typing import Optional
 
 import pygame
-
+from abc import ABC, abstractmethod
 from ..utils import GameConfig, get_hit_mask, pixel_collision
 
 
-class Entity:
+class Entity(ABC):
     """Entity class.
 
     Attributes:
@@ -18,6 +19,7 @@ class Entity:
         h: Height of the entity.
         hit_mask: Hit mask of the entity.
     """
+
     def __init__(
         self,
         config: GameConfig,
@@ -71,12 +73,18 @@ class Entity:
             return self.rect.colliderect(other.rect)
         return pixel_collision(self.rect, other.rect, self.hit_mask, other.hit_mask)
 
+    @abstractmethod
     def tick(self) -> None:
         """Updates the entity."""
-        self.draw()
-        rect = self.rect
+        # Update entity logic here, if any
+        pass
+
+    def render(self) -> None:
+        """Draws the entity on the screen."""
+        if self.image:
+            self.config.screen.blit(self.image, self.rect)
         if self.config.debug:
-            pygame.draw.rect(self.config.screen, (255, 0, 0), rect, 1)
+            pygame.draw.rect(self.config.screen, (255, 0, 0), self.rect, 1)
             # write x and y at top of rect
             font = pygame.font.SysFont("Arial", 13, True)
             text = font.render(
@@ -87,12 +95,7 @@ class Entity:
             self.config.screen.blit(
                 text,
                 (
-                    rect.x + rect.w / 2 - text.get_width() / 2,
-                    rect.y - text.get_height(),
+                    self.rect.x + self.rect.w / 2 - text.get_width() / 2,
+                    self.rect.y - text.get_height(),
                 ),
             )
-
-    def draw(self) -> None:
-        """Draws the entity on the screen."""
-        if self.image:
-            self.config.screen.blit(self.image, self.rect)

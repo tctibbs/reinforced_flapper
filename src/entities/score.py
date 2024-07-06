@@ -1,4 +1,5 @@
 """Module for the Score entity."""
+
 import pygame
 
 from ..utils import GameConfig
@@ -12,6 +13,7 @@ class Score(Entity):
         y: Y-coordinate of the score.
         score: Current score.
     """
+
     def __init__(self, config: GameConfig) -> None:
         super().__init__(config)
         self.y = self.config.window.height * 0.1
@@ -36,7 +38,11 @@ class Score(Entity):
         h = max(image.get_height() for image in images)
         return pygame.Rect(x, self.y, w, h)
 
-    def draw(self) -> None:
+    def tick(self) -> None:
+        """Updates the score."""
+        pass
+
+    def render(self) -> None:
         """displays score in center of screen"""
         score_digits = [int(x) for x in list(str(self.score))]
         images = [self.config.images.numbers[digit] for digit in score_digits]

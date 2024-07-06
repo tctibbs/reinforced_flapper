@@ -1,4 +1,5 @@
 """Module for managing game sounds."""
+
 import sys
 
 import pygame
@@ -14,6 +15,7 @@ class Sounds:
         swoosh: Swoosh sound.
         wing: Wing sound.
     """
+
     die: pygame.mixer.Sound
     hit: pygame.mixer.Sound
     point: pygame.mixer.Sound

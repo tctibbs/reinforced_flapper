@@ -1,4 +1,5 @@
 """Module for the Background class."""
+
 from ..utils import GameConfig
 from .entity import Entity
 
@@ -9,6 +10,7 @@ class Background(Entity):
     Attributes:
         config: Game configuration.
     """
+
     def __init__(self, config: GameConfig) -> None:
         super().__init__(
             config,
@@ -18,3 +20,7 @@ class Background(Entity):
             config.window.width,
             config.window.height,
         )
+
+    def tick(self) -> None:
+        """Update the background."""
+        pass

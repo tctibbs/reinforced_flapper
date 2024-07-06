@@ -1,8 +1,9 @@
 """Module containing the game window class."""
 
+
 class Window:
     """Game window.
-    
+
     Attributes:
         width: Window width.
         height: Window height.
@@ -16,6 +17,7 @@ class Window:
         vh: Viewport height.
         vr: Viewport
     """
+
     def __init__(self, width: int, height: int) -> None:
         self.width = width
         self.height = height

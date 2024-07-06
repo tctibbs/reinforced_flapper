@@ -1,4 +1,5 @@
 """Module for managing game images."""
+
 import random
 from typing import List, Tuple
 
@@ -19,6 +20,7 @@ class Images:
         player: Tuple of player sprites.
         pipe: Tuple of pipe sprites.
     """
+
     numbers: List[pygame.Surface]
     game_over: pygame.Surface
     welcome_message: pygame.Surface

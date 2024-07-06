@@ -1,4 +1,5 @@
 """Module for pipe entities."""
+
 import random
 from typing import List
 
@@ -12,14 +13,18 @@ class Pipe(Entity):
     Attributes:
         vel_x: Velocity of the pipe.
     """
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.vel_x = -5
 
-    def draw(self) -> None:
-        """Draw the pipe."""
+    def tick(self) -> None:
+        """Update the pipe."""
         self.x += self.vel_x
-        super().draw()
+
+    def render(self) -> None:
+        """Render the pipe."""
+        return super().render()
 
 
 class Pipes(Entity):
@@ -32,6 +37,7 @@ class Pipes(Entity):
         upper: List of upper pipes.
         lower: List of lower pipes.
     """
+
     upper: List[Pipe]
     lower: List[Pipe]
 
@@ -124,3 +130,9 @@ class Pipes(Entity):
         )
 
         return upper_pipe, lower_pipe
+
+    def render(self) -> None:
+        """Render the pipes."""
+        for up_pipe, low_pipe in zip(self.upper, self.lower):
+            up_pipe.render()
+            low_pipe.render()

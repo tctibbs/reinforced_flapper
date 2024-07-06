@@ -1,4 +1,5 @@
 """Flappy Bird game implementation"""
+
 import asyncio
 import sys
 
@@ -20,6 +21,7 @@ from .utils import GameConfig, Images, Sounds, Window
 
 class Flappy:
     """Flappy Bird game implementation"""
+
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Flappy Bird")
@@ -61,10 +63,10 @@ class Flappy:
                 if self.is_tap_event(event):
                     return
 
-            self.background.tick()
-            self.floor.tick()
-            self.player.tick()
-            self.welcome_message.tick()
+            self.background.render()
+            self.floor.render()
+            self.player.render()
+            self.welcome_message.render()
 
             pygame.display.update()
             await asyncio.sleep(0)
@@ -103,11 +105,14 @@ class Flappy:
                 if self.is_tap_event(event):
                     self.player.flap()
 
-            self.background.tick()
-            self.floor.tick()
             self.pipes.tick()
-            self.score.tick()
             self.player.tick()
+
+            self.background.render()
+            self.floor.render()
+            self.pipes.render()
+            self.score.render()
+            self.player.render()
 
             pygame.display.update()
             await asyncio.sleep(0)
@@ -127,12 +132,19 @@ class Flappy:
                     if self.player.y + self.player.h >= self.floor.y - 1:
                         return
 
-            self.background.tick()
-            self.floor.tick()
             self.pipes.tick()
-            self.score.tick()
             self.player.tick()
-            self.game_over_message.tick()
+
+            self.background.render()
+            self.floor.render()
+            self.pipes.render()
+            self.score.render()
+            self.player.render()
+            self.game_over_message.render()
+
+            pygame.display.update()
+            await asyncio.sleep(0)
+            self.config.tick()
 
             self.config.tick()
             pygame.display.update()

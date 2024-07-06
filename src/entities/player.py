@@ -1,4 +1,5 @@
 """Player entity module."""
+
 from enum import Enum
 from itertools import cycle
 
@@ -12,6 +13,7 @@ from .pipe import Pipe, Pipes
 
 class PlayerMode(Enum):
     """Possible player modes."""
+
     SHM = "SHM"
     NORMAL = "NORMAL"
     CRASH = "CRASH"
@@ -30,6 +32,7 @@ class Player(Entity):
         crashed: True if player crashed.
         crash_entity: Entity with which player crashed.
     """
+
     def __init__(self, config: GameConfig) -> None:
         image = config.images.player[0]
         x = int(config.window.width * 0.2)
@@ -96,15 +99,6 @@ class Player(Entity):
         self.max_vel_y = 15
         self.vel_rot = -8
 
-    def update_image(self):
-        """Update the image of the player."""
-        self.frame += 1
-        if self.frame % 5 == 0:
-            self.img_idx = next(self.img_gen)
-            self.image = self.config.images.player[self.img_idx]
-            self.w = self.image.get_width()
-            self.h = self.image.get_height()
-
     def tick_shm(self) -> None:
         """Update player position in SHM mode."""
         if self.vel_y >= self.max_vel_y or self.vel_y <= self.min_vel_y:
@@ -138,9 +132,8 @@ class Player(Entity):
         """Rotate the player."""
         self.rot = clamp(self.rot + self.vel_rot, self.rot_min, self.rot_max)
 
-    def draw(self) -> None:
-        """Draw the player."""
-        self.update_image()
+    def tick(self) -> None:
+        """Update the player."""
         if self.mode == PlayerMode.SHM:
             self.tick_shm()
         elif self.mode == PlayerMode.NORMAL:
@@ -148,7 +141,19 @@ class Player(Entity):
         elif self.mode == PlayerMode.CRASH:
             self.tick_crash()
 
+    def render(self) -> None:
+        """Draw the player."""
+        self.update_image()
         self.draw_player()
+
+    def update_image(self):
+        """Update the image of the player."""
+        self.frame += 1
+        if self.frame % 5 == 0:
+            self.img_idx = next(self.img_gen)
+            self.image = self.config.images.player[self.img_idx]
+            self.w = self.image.get_width()
+            self.h = self.image.get_height()
 
     def draw_player(self) -> None:
         """Draw the player."""

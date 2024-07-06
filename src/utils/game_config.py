@@ -1,4 +1,5 @@
 """Game configuration."""
+
 import os
 
 import pygame
@@ -10,7 +11,7 @@ from .window import Window
 
 class GameConfig:
     """Game configuration.
-    
+
     Attributes:
         screen: Pygame screen.
         clock: Pygame clock.
@@ -20,6 +21,7 @@ class GameConfig:
         sounds: Game sounds.
         debug: Debug mode.
     """
+
     def __init__(
         self,
         screen: pygame.Surface,
