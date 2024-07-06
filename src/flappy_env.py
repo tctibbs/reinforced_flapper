@@ -71,7 +71,6 @@ class FlappyBirdEnv(gym.Env):
         if action == 1:
             self.player.flap()
 
-
         pygame.time.wait(25)
         self.background.tick()
         self.floor.tick()
@@ -86,8 +85,8 @@ class FlappyBirdEnv(gym.Env):
             self.game_over()
 
         for i, pipe in enumerate(self.pipes.upper):
-                if self.player.crossed(pipe):
-                    self.score.add()
+            if self.player.crossed(pipe):
+                self.score.add()
 
         return obs, reward, self.done, {}
 
@@ -194,6 +193,7 @@ class FlappyBirdEnv(gym.Env):
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             pygame.quit()
             sys.exit()
+
 
 # Game loop for human play
 if __name__ == "__main__":

@@ -18,7 +18,8 @@ def main(mode: str) -> None:
     elif mode == "agent_training":
         pass
 
-def human_mode() -> None: 
+
+def human_mode() -> None:
     """Runs the Flappy Bird game in human mode."""
     FlappyBirdEnv()
     env = FlappyBirdEnv()
@@ -31,6 +32,7 @@ def human_mode() -> None:
 
     env.close()
 
+
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Flappy Bird Reinforcement Learning")
@@ -38,11 +40,12 @@ def parse_args() -> argparse.Namespace:
         "mode",
         choices=["human", "agent", "agent_training"],
         help="Mode to run the program in.\n"
-            "\t'human' for human play,\n"
-            "\t'agent' for agent play,\n"
-            "\t'agent_training' for training the agent.",
+        "\t'human' for human play,\n"
+        "\t'agent' for agent play,\n"
+        "\t'agent_training' for training the agent.",
     )
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     args = parse_args()
