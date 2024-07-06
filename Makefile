@@ -2,10 +2,10 @@ default:
 	@make run
 
 run:
-	python main.py
+	python -m src.main human
 
 agent:
-	python -m src.flappy_env
+	python -m src.main agent
 
 # init:
 # 	@pip install -U pip; \
