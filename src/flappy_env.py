@@ -1,12 +1,15 @@
+"""Flappy Bird Gymnasium environment for reinforcement learning."""
+
 import sys
+from typing import ClassVar
 
 import gymnasium as gym
+from gymnasium import spaces
 import numpy as np
 import pygame
-from gymnasium import spaces
 from pygame.locals import K_ESCAPE, K_SPACE, K_UP, KEYDOWN, QUIT
 
-from .entities import (
+from src.entities import (
     Background,
     Floor,
     GameOver,
@@ -16,16 +19,17 @@ from .entities import (
     Score,
     WelcomeMessage,
 )
-from .utils import GameConfig, Images, Sounds, Window
+from src.utils import GameConfig, Images, Sounds, Window
 
 
 class FlappyBirdEnv(gym.Env):
-    """Custom Gym Environment for Flappy Bird"""
+    """Custom Gym Environment for Flappy Bird."""
 
-    metadata = {"render.modes": ["human"]}
+    metadata: ClassVar[dict[str, list[str]]] = {"render.modes": ["human"]}
 
-    def __init__(self):
-        super(FlappyBirdEnv, self).__init__()
+    def __init__(self) -> None:
+        """Initialize the Flappy Bird environment."""
+        super().__init__()
 
         # Define action and observation space
         # Actions: 0 = no flap, 1 = flap
@@ -51,8 +55,8 @@ class FlappyBirdEnv(gym.Env):
             sounds=Sounds(),
         )
 
-    def reset(self):
-        """Reset the environment state"""
+    def reset(self) -> np.ndarray:
+        """Reset the environment state."""
         self.background = Background(self.config)
         self.floor = Floor(self.config)
         self.player = Player(self.config)
@@ -67,7 +71,7 @@ class FlappyBirdEnv(gym.Env):
         return self._get_observation()
 
     def step(self, action: int) -> tuple:
-        """Take a step in the environment"""
+        """Take a step in the environment."""
         if action == 1:
             self.player.flap()
 
@@ -84,17 +88,18 @@ class FlappyBirdEnv(gym.Env):
         if self.done:
             self.game_over()
 
-        for i, pipe in enumerate(self.pipes.upper):
+        for _i, pipe in enumerate(self.pipes.upper):
             if self.player.crossed(pipe):
                 self.score.add()
 
         return obs, reward, self.done, {}
 
-    def render(self, mode="human") -> bool:
+    def render(self, mode: str = "human") -> bool:
         """Render the environment.
 
         Args:
             mode: The mode to render the environment in.
+
         Returns:
             bool: True if the environment is still running, False if it is closed.
         """
@@ -118,22 +123,22 @@ class FlappyBirdEnv(gym.Env):
         return True
 
     def close(self) -> None:
-        """Close the environment"""
+        """Close the environment."""
         pygame.quit()
 
     def _get_observation(self) -> np.ndarray:
-        """Capture the game screen as the observation"""
+        """Capture the game screen as the observation."""
         return pygame.surfarray.array3d(pygame.display.get_surface()).transpose(1, 0, 2)
 
-    def _calculate_reward(self):
-        """Calculate the reward for the current step"""
+    def _calculate_reward(self) -> int:
+        """Calculate the reward for the current step."""
         reward = 1
         if self.player.collided(self.pipes, self.floor):
             reward = -100
         return reward
 
-    def _is_tap_event(self, event) -> bool:
-        """Check if the event is a tap event"""
+    def _is_tap_event(self, event: pygame.event.Event) -> bool:
+        """Check if the event is a tap event."""
         m_left, _, _ = pygame.mouse.get_pressed()
         space_or_up = event.type == KEYDOWN and (
             event.key == K_SPACE or event.key == K_UP
@@ -142,8 +147,7 @@ class FlappyBirdEnv(gym.Env):
         return m_left or space_or_up or screen_tap
 
     def game_over(self) -> None:
-        """crashes the player down and shows gameover image."""
-
+        """Crashes the player down and shows gameover image."""
         self.player.set_mode(PlayerMode.CRASH)
         self.pipes.stop()
         self.floor.stop()
@@ -170,7 +174,6 @@ class FlappyBirdEnv(gym.Env):
 
     def splash(self) -> None:
         """Shows welcome splash screen animation of flappy bird."""
-
         self.player.set_mode(PlayerMode.SHM)
 
         while True:
@@ -188,7 +191,7 @@ class FlappyBirdEnv(gym.Env):
             pygame.display.update()
             self.config.tick()
 
-    def check_quit_event(self, event) -> None:
+    def check_quit_event(self, event: pygame.event.Event) -> None:
         """Check if the quit event is triggered."""
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             pygame.quit()

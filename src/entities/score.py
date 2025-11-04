@@ -2,8 +2,8 @@
 
 import pygame
 
-from ..utils import GameConfig
-from .entity import Entity
+from src.entities.entity import Entity
+from src.utils import GameConfig
 
 
 class Score(Entity):
@@ -15,6 +15,7 @@ class Score(Entity):
     """
 
     def __init__(self, config: GameConfig) -> None:
+        """Initialize the score."""
         super().__init__(config)
         self.y = self.config.window.height * 0.1
         self.score = 0
@@ -40,10 +41,9 @@ class Score(Entity):
 
     def tick(self) -> None:
         """Updates the score."""
-        pass
 
     def render(self) -> None:
-        """displays score in center of screen"""
+        """Displays score in center of screen."""
         score_digits = [int(x) for x in list(str(self.score))]
         images = [self.config.images.numbers[digit] for digit in score_digits]
         digits_width = sum(image.get_width() for image in images)

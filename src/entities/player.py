@@ -5,10 +5,10 @@ from itertools import cycle
 
 import pygame
 
-from ..utils import GameConfig, clamp
-from .entity import Entity
-from .floor import Floor
-from .pipe import Pipe, Pipes
+from src.entities.entity import Entity
+from src.entities.floor import Floor
+from src.entities.pipe import Pipe, Pipes
+from src.utils import GameConfig, clamp
 
 
 class PlayerMode(Enum):
@@ -34,6 +34,7 @@ class Player(Entity):
     """
 
     def __init__(self, config: GameConfig) -> None:
+        """Initialize the player."""
         image = config.images.player[0]
         x = int(config.window.width * 0.2)
         y = int((config.window.height - image.get_height()) / 2)
@@ -146,7 +147,7 @@ class Player(Entity):
         self.update_image()
         self.draw_player()
 
-    def update_image(self):
+    def update_image(self) -> None:
         """Update the image of the player."""
         self.frame += 1
         if self.frame % 5 == 0:
@@ -179,7 +180,6 @@ class Player(Entity):
 
     def collided(self, pipes: Pipes, floor: Floor) -> bool:
         """Returns True if player collides with floor or pipes."""
-
         # if player crashes into ground
         if self.collide(floor):
             self.crashed = True

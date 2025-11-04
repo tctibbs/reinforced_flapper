@@ -4,7 +4,10 @@ It contains the entry point of the program, which initializes and starts the Fla
 """
 
 import argparse
-from .flappy_env import FlappyBirdEnv  # Assuming you have this Gym environment defined
+
+from src.flappy_env import (
+    FlappyBirdEnv,  # Assuming you have this Gym environment defined
+)
 
 
 def main(mode: str) -> None:
@@ -12,10 +15,7 @@ def main(mode: str) -> None:
     if mode == "human":
         human_mode()
 
-    elif mode == "agent":
-        pass
-
-    elif mode == "agent_training":
+    elif mode == "agent" or mode == "agent_training":
         pass
 
 

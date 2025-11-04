@@ -19,5 +19,63 @@ ruff = "^0.5.1"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",    # PEP 8 errors (syntax or structural errors in the code)
+    "F",    # Pyflakes rules for catching unused imports and variables
+    "W",    # General warnings for non-standard Python usage
+    "I",    # Import sorting and organization
+    "N",    # Naming convention rules for variables, functions, and classes
+    "D",    # pydocstyle - docstring conventions
+    "BLE",  # Better list expressions and prevents suboptimal code patterns
+    "B",    # Bug risk and best practice rules
+    "A",    # Anti-pattern detection and prevents commonly misused idioms
+    "ICN",  # Improved code readability and naming conventions
+    "Q",    # Consistent usage of single or double quotes
+    "PD",   # Pandas-specific best practices and catches common issues
+    "ANN",  # Checks for type/return annotations
+    "UP",   # Upgrade syntax for newer Python versions
+    "C4",   # Code complexity and comprehensions
+    "SIM",  # Code simplification suggestions
+    "PT",   # pytest-style checks
+    "PTH",  # Use pathlib instead of os.path
+    "PIE",  # Miscellaneous linting rules
+    "ISC",  # Implicit string concatenation
+    "TID",  # Tidy imports
+    "RUF",  # Ruff-specific rules
+]
+ignore = [
+    "E501",  # Line too long (handled by formatter)
+    "D203",  # One blank line before class (conflicts with D211)
+    "D213",  # Multi-line summary second line (conflicts with D212)
+    "ANN401",  # Allow typing.Any for generic/wrapper functions
+]
+unfixable = [
+    "F401",  # Prevent auto-removal of unused imports while editing
+]
+
+# Google-style docstring configuration
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+# Import sorting configuration
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+
+# Tidy imports configuration
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+# Code formatting configuration
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# Per-file ignores
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]

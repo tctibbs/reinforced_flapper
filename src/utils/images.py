@@ -1,11 +1,10 @@
 """Module for managing game images."""
 
 import random
-from typing import List, Tuple
 
 import pygame
 
-from .constants import BACKGROUNDS, PIPES, PLAYERS
+from src.utils.constants import BACKGROUNDS, PIPES, PLAYERS
 
 
 class Images:
@@ -21,21 +20,20 @@ class Images:
         pipe: Tuple of pipe sprites.
     """
 
-    numbers: List[pygame.Surface]
+    numbers: list[pygame.Surface]
     game_over: pygame.Surface
     welcome_message: pygame.Surface
     base: pygame.Surface
     background: pygame.Surface
-    player: Tuple[pygame.Surface]
-    pipe: Tuple[pygame.Surface]
+    player: tuple[pygame.Surface]
+    pipe: tuple[pygame.Surface]
 
     def __init__(self) -> None:
-        self.numbers = list(
-            (
+        """Initialize game images and load sprites."""
+        self.numbers = [
                 pygame.image.load(f"assets/sprites/{num}.png").convert_alpha()
                 for num in range(10)
-            )
-        )
+        ]
 
         # game over sprite
         self.game_over = pygame.image.load(
@@ -50,7 +48,7 @@ class Images:
         self.randomize()
 
     def randomize(self) -> None:
-        """Randomize the game sprites"""
+        """Randomize the game sprites."""
         # select random background sprites
         rand_bg = random.randint(0, len(BACKGROUNDS) - 1)
         # select random player sprites

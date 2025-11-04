@@ -4,9 +4,9 @@ import os
 
 import pygame
 
-from .images import Images
-from .sounds import Sounds
-from .window import Window
+from src.utils.images import Images
+from src.utils.sounds import Sounds
+from src.utils.window import Window
 
 
 class GameConfig:
@@ -31,6 +31,7 @@ class GameConfig:
         images: Images,
         sounds: Sounds,
     ) -> None:
+        """Initialize the game configuration."""
         self.screen = screen
         self.clock = clock
         self.fps = fps

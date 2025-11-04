@@ -1,6 +1,9 @@
+"""DQN agent training script for Flappy Bird."""
+
 from stable_baselines3 import DQN
 from stable_baselines3.common.env_util import make_vec_env
-from .flappy_env import FlappyBirdEnv
+
+from src.flappy_env import FlappyBirdEnv
 
 # Create the environment
 env = make_vec_env(FlappyBirdEnv, n_envs=1)
@@ -27,7 +30,7 @@ model = DQN.load("dqn_flappybird")
 
 # Test the trained model
 obs = env.reset()
-for i in range(1000):
+for _i in range(1000):
     action, _states = model.predict(obs, deterministic=True)
     obs, reward, done, info = env.step(action)
     env.render()

@@ -1,13 +1,16 @@
+"""Utility functions for game operations."""
+
+from collections.abc import Callable
 from functools import wraps
-from typing import List, Callable
+from typing import Any
 
 import pygame
 
-HitMaskType = List[List[bool]]
+HitMaskType = list[list[bool]]
 
 
 def clamp(n: float, minn: float, maxn: float) -> float:
-    """Clamps a number between two values"""
+    """Clamps a number between two values."""
     return max(min(maxn, n), minn)
 
 
@@ -16,7 +19,7 @@ def memoize(func: Callable) -> Callable:
     cache = {}
 
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         key = (args, frozenset(kwargs.items()))
         if key not in cache:
             cache[key] = func(*args, **kwargs)
@@ -27,13 +30,13 @@ def memoize(func: Callable) -> Callable:
 
 @memoize
 def get_hit_mask(image: pygame.Surface) -> HitMaskType:
-    """returns a hit mask using an image's alpha."""
-    return list(
-        (
-            list((bool(image.get_at((x, y))[3]) for y in range(image.get_height())))
+    """Returns a hit mask using an image's alpha."""
+    return [
+
+            [bool(image.get_at((x, y))[3]) for y in range(image.get_height())]
             for x in range(image.get_width())
-        )
-    )
+
+    ]
 
 
 def pixel_collision(
@@ -41,7 +44,7 @@ def pixel_collision(
     rect2: pygame.Rect,
     hitmask1: HitMaskType,
     hitmask2: HitMaskType,
-):
+) -> bool:
     """Checks if two objects collide and not just their rects.
 
     Args:
