@@ -1,4 +1,4 @@
-"""Flappy Bird game implementation"""
+"""Flappy Bird game implementation."""
 
 import asyncio
 import sys
@@ -6,7 +6,7 @@ import sys
 import pygame
 from pygame.locals import K_ESCAPE, K_SPACE, K_UP, KEYDOWN, QUIT
 
-from .entities import (
+from src.entities import (
     Background,
     Floor,
     GameOver,
@@ -16,13 +16,14 @@ from .entities import (
     Score,
     WelcomeMessage,
 )
-from .utils import GameConfig, Images, Sounds, Window
+from src.utils import GameConfig, Images, Sounds, Window
 
 
 class Flappy:
-    """Flappy Bird game implementation"""
+    """Flappy Bird game implementation."""
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the Flappy Bird game."""
         pygame.init()
         pygame.display.set_caption("Flappy Bird")
         window = Window(288, 512)
@@ -54,7 +55,6 @@ class Flappy:
 
     async def splash(self) -> None:
         """Shows welcome splash screen animation of flappy bird."""
-
         self.player.set_mode(PlayerMode.SHM)
 
         while True:
@@ -72,13 +72,13 @@ class Flappy:
             await asyncio.sleep(0)
             self.config.tick()
 
-    def check_quit_event(self, event) -> None:
+    def check_quit_event(self, event: pygame.event.Event) -> None:
         """Check if the quit event is triggered."""
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             pygame.quit()
             sys.exit()
 
-    def is_tap_event(self, event) -> bool:
+    def is_tap_event(self, event: pygame.event.Event) -> bool:
         """Returns True if mouse left click or space key or up key is pressed."""
         m_left, _, _ = pygame.mouse.get_pressed()
         space_or_up = event.type == KEYDOWN and (
@@ -96,7 +96,7 @@ class Flappy:
             if self.player.collided(self.pipes, self.floor):
                 return
 
-            for i, pipe in enumerate(self.pipes.upper):
+            for _i, pipe in enumerate(self.pipes.upper):
                 if self.player.crossed(pipe):
                     self.score.add()
 
@@ -119,8 +119,7 @@ class Flappy:
             self.config.tick()
 
     async def game_over(self) -> None:
-        """crashes the player down and shows gameover image."""
-
+        """Crashes the player down and shows gameover image."""
         self.player.set_mode(PlayerMode.CRASH)
         self.pipes.stop()
         self.floor.stop()
@@ -128,9 +127,8 @@ class Flappy:
         while True:
             for event in pygame.event.get():
                 self.check_quit_event(event)
-                if self.is_tap_event(event):
-                    if self.player.y + self.player.h >= self.floor.y - 1:
-                        return
+                if self.is_tap_event(event) and self.player.y + self.player.h >= self.floor.y - 1:
+                    return
 
             self.pipes.tick()
             self.player.tick()

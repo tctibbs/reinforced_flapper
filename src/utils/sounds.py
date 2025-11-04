@@ -23,6 +23,7 @@ class Sounds:
     wing: pygame.mixer.Sound
 
     def __init__(self) -> None:
+        """Initialize game sounds and load audio files."""
         if "win" in sys.platform:
             ext = "wav"
         else:

@@ -1,10 +1,11 @@
 """Module defining the Entity class."""
 
-from typing import Optional
+from abc import ABC, abstractmethod
+from typing import Any
 
 import pygame
-from abc import ABC, abstractmethod
-from ..utils import GameConfig, get_hit_mask, pixel_collision
+
+from src.utils import GameConfig, get_hit_mask, pixel_collision
 
 
 class Entity(ABC):
@@ -23,13 +24,14 @@ class Entity(ABC):
     def __init__(
         self,
         config: GameConfig,
-        image: Optional[pygame.Surface] = None,
-        x=0,
-        y=0,
-        w: int = None,
-        h: int = None,
-        **kwargs,
+        image: pygame.Surface | None = None,
+        x: int = 0,
+        y: int = 0,
+        w: int | None = None,
+        h: int | None = None,
+        **kwargs: Any,
     ) -> None:
+        """Initialize the entity with configuration and positioning."""
         self.config = config
         self.x = x
         self.y = y
@@ -45,7 +47,7 @@ class Entity(ABC):
         self.hit_mask = get_hit_mask(image) if image else None
         self.__dict__.update(kwargs)
 
-    def update_image(self, image: pygame.Surface, w: int = None, h: int = None) -> None:
+    def update_image(self, image: pygame.Surface, w: int | None = None, h: int | None = None) -> None:
         """Update the image of the entity."""
         self.image = image
         self.hit_mask = get_hit_mask(image)
@@ -67,7 +69,7 @@ class Entity(ABC):
         """Returns the rect of the entity."""
         return pygame.Rect(self.x, self.y, self.w, self.h)
 
-    def collide(self, other) -> bool:
+    def collide(self, other: "Entity") -> bool:
         """Returns a boolean indicating whether the entity collides with another entity."""
         if not self.hit_mask or not other.hit_mask:
             return self.rect.colliderect(other.rect)
@@ -77,7 +79,6 @@ class Entity(ABC):
     def tick(self) -> None:
         """Updates the entity."""
         # Update entity logic here, if any
-        pass
 
     def render(self) -> None:
         """Draws the entity on the screen."""

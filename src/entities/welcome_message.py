@@ -1,7 +1,7 @@
 """Module for the welcome message entity."""
 
-from ..utils import GameConfig
-from .entity import Entity
+from src.entities.entity import Entity
+from src.utils import GameConfig
 
 
 class WelcomeMessage(Entity):
@@ -12,6 +12,7 @@ class WelcomeMessage(Entity):
     """
 
     def __init__(self, config: GameConfig) -> None:
+        """Initialize the welcome message."""
         image = config.images.welcome_message
         super().__init__(
             config=config,
@@ -22,4 +23,3 @@ class WelcomeMessage(Entity):
 
     def tick(self) -> None:
         """Update the welcome message."""
-        pass

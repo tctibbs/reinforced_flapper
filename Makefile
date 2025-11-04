@@ -1,26 +1,49 @@
-default:
-	@make run
+.PHONY: help install lint format test check clean run agent
 
-run:
+# Show available commands
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+# Install dependencies using Poetry
+install: ## Install project dependencies
+	poetry install
+
+# Run linting checks
+lint: ## Run linting and static analysis
+	uv run --with ruff ruff check .
+
+# Format code with ruff
+format: ## Format code and fix linting issues
+	uv run --with ruff ruff format .
+	uv run --with ruff ruff check --fix .
+
+# Run test suite (placeholder for when tests are added)
+test: ## Run pytest test suite
+	@echo "No tests configured yet"
+
+# Run all quality gates
+check: ## Run linting and tests
+	$(MAKE) lint
+	$(MAKE) test
+
+# Clean build artifacts and cache files
+clean: ## Remove build artifacts and cache files
+	find . -type d -name __pycache__ -delete
+	find . -type f -name "*.pyc" -delete
+	find . -type d -name "*.egg-info" -exec rm -rf {} +
+	rm -rf build/
+	rm -rf dist/
+	rm -rf .pytest_cache/
+	rm -rf .ruff_cache/
+
+# Default target - show help
+default:
+	@make help
+
+# Run human playable mode
+run: ## Run game in human playable mode
 	python -m src.main human
 
-agent:
+# Run agent mode
+agent: ## Run game in agent mode
 	python -m src.main agent
-
-# init:
-# 	@pip install -U pip; \
-# 	pip install -e ".[dev]"; \s
-# 	pre-commit install; \
-
-# pre-commit:
-# 	pre-commit install
-
-# pre-commit-all:
-# 	pre-commit run --all-files
-
-# format:
-# 	black .
-
-# lint:
-# 	ruff format
-# 	ruff check --fix

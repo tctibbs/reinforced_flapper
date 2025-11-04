@@ -1,7 +1,7 @@
 """Module for the GameOver entity."""
 
-from ..utils import GameConfig
-from .entity import Entity
+from src.entities.entity import Entity
+from src.utils import GameConfig
 
 
 class GameOver(Entity):
@@ -12,6 +12,7 @@ class GameOver(Entity):
     """
 
     def __init__(self, config: GameConfig) -> None:
+        """Initialize the game over screen."""
         super().__init__(
             config=config,
             image=config.images.game_over,
@@ -21,4 +22,3 @@ class GameOver(Entity):
 
     def tick(self) -> None:
         """Update the game over screen."""
-        pass

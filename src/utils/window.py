@@ -19,6 +19,7 @@ class Window:
     """
 
     def __init__(self, width: int, height: int) -> None:
+        """Initialize the game window with dimensions."""
         self.width = width
         self.height = height
         self.ratio = width / height

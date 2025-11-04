@@ -1,10 +1,10 @@
 """Module for pipe entities."""
 
 import random
-from typing import List
+from typing import Any
 
-from ..utils import GameConfig
-from .entity import Entity
+from src.entities.entity import Entity
+from src.utils import GameConfig
 
 
 class Pipe(Entity):
@@ -14,7 +14,8 @@ class Pipe(Entity):
         vel_x: Velocity of the pipe.
     """
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initialize the pipe."""
         super().__init__(*args, **kwargs)
         self.vel_x = -5
 
@@ -38,10 +39,11 @@ class Pipes(Entity):
         lower: List of lower pipes.
     """
 
-    upper: List[Pipe]
-    lower: List[Pipe]
+    upper: list[Pipe]
+    lower: list[Pipe]
 
     def __init__(self, config: GameConfig) -> None:
+        """Initialize the pipes."""
         super().__init__(config)
         self.pipe_gap = 120
         self.top = 0
@@ -56,7 +58,7 @@ class Pipes(Entity):
             self.spawn_new_pipes()
         self.remove_old_pipes()
 
-        for up_pipe, low_pipe in zip(self.upper, self.lower):
+        for up_pipe, low_pipe in zip(self.upper, self.lower, strict=False):
             up_pipe.tick()
             low_pipe.tick()
 
@@ -105,7 +107,7 @@ class Pipes(Entity):
         self.upper.append(upper_2)
         self.lower.append(lower_2)
 
-    def make_random_pipes(self) -> List[Pipe]:
+    def make_random_pipes(self) -> list[Pipe]:
         """Returns a randomly generated pipe."""
         # y of gap between upper and lower pipe
         base_y = self.config.window.viewport_height
@@ -133,6 +135,6 @@ class Pipes(Entity):
 
     def render(self) -> None:
         """Render the pipes."""
-        for up_pipe, low_pipe in zip(self.upper, self.lower):
+        for up_pipe, low_pipe in zip(self.upper, self.lower, strict=False):
             up_pipe.render()
             low_pipe.render()
