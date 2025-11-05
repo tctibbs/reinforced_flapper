@@ -32,10 +32,8 @@ def memoize(func: Callable) -> Callable:
 def get_hit_mask(image: pygame.Surface) -> HitMaskType:
     """Returns a hit mask using an image's alpha."""
     return [
-
-            [bool(image.get_at((x, y))[3]) for y in range(image.get_height())]
-            for x in range(image.get_width())
-
+        [bool(image.get_at((x, y))[3]) for y in range(image.get_height())]
+        for x in range(image.get_width())
     ]
 
 

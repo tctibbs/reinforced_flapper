@@ -47,7 +47,9 @@ class Entity(ABC):
         self.hit_mask = get_hit_mask(image) if image else None
         self.__dict__.update(kwargs)
 
-    def update_image(self, image: pygame.Surface, w: int | None = None, h: int | None = None) -> None:
+    def update_image(
+        self, image: pygame.Surface, w: int | None = None, h: int | None = None
+    ) -> None:
         """Update the image of the entity."""
         self.image = image
         self.hit_mask = get_hit_mask(image)

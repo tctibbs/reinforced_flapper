@@ -127,7 +127,10 @@ class Flappy:
         while True:
             for event in pygame.event.get():
                 self.check_quit_event(event)
-                if self.is_tap_event(event) and self.player.y + self.player.h >= self.floor.y - 1:
+                if (
+                    self.is_tap_event(event)
+                    and self.player.y + self.player.h >= self.floor.y - 1
+                ):
                     return
 
             self.pipes.tick()

@@ -53,8 +53,9 @@ env.bak/
 venv.bak/
 .venv/
 
-# Poetry
+# Package managers
 poetry.lock
+# Note: uv.lock should be committed to track exact versions
 
 # IDEs
 .vscode/
