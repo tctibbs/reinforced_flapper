@@ -4,9 +4,9 @@
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-# Install dependencies using Poetry
+# Install dependencies using uv
 install: ## Install project dependencies
-	poetry install
+	uv sync --all-extras
 
 # Run linting checks
 lint: ## Run linting and static analysis
@@ -42,8 +42,12 @@ default:
 
 # Run human playable mode
 run: ## Run game in human playable mode
-	python -m src.main human
+	uv run python src/main.py human
 
 # Run agent mode
 agent: ## Run game in agent mode
-	python -m src.main agent
+	uv run python src/main.py agent
+
+# Run agent training mode
+train: ## Run game in agent training mode
+	uv run python src/main.py agent_training

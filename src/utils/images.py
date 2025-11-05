@@ -31,8 +31,8 @@ class Images:
     def __init__(self) -> None:
         """Initialize game images and load sprites."""
         self.numbers = [
-                pygame.image.load(f"assets/sprites/{num}.png").convert_alpha()
-                for num in range(10)
+            pygame.image.load(f"assets/sprites/{num}.png").convert_alpha()
+            for num in range(10)
         ]
 
         # game over sprite
